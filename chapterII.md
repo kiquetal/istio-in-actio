@@ -23,3 +23,43 @@ bin/istioctl version
 ![control-plane](./images/control-plane.png)
 
 ![cert-proxy](./images/cert-proxy.png)
+
+#### Routing Rules
+
+```yaml
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: catalog
+spec:
+  host: catalog
+  subsets:
+    - name: version-v1
+      labels:
+        version: v1
+    - name: version-v2
+      labels:
+        version: v2
+```
+
+#### VirtualService
+
+```yaml
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: catalog
+spec:
+  hosts:
+    - catalog
+  http:
+    - route:
+      - destination:
+          host: catalog
+          subset: version-v1
+```
+
+`spec.host` is the user-addressable
+
+`spec.gateway` : use Gateway to controll how the traffic flows
+
