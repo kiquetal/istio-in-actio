@@ -63,3 +63,12 @@ spec:
 
 `spec.gateway` : use Gateway to controll how the traffic flows
 
+---
+
+### Summary
+
+- The sidecar proxy can be injected manually into YAML using
+istioctl kube-inject
+- In namespaces labeled with `istio-injection=enabled` the proxies
+- are automatically injected into `newly` created pods
+
