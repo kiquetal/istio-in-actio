@@ -70,12 +70,13 @@ spec:
 	selector:
 		istio: ingressgateway
 	servers:
-	- port:
+	-	hosts:
+			- "*"
+	  port:
 			number: 31400
 			name: tcp-echo
 			protocol: TCP
-		hosts:
-		- "*"
+		
 ```
 #### Obtain the tcp port from the istio-ingressgateway
 
@@ -103,4 +104,27 @@ spec:
 						port:
 							number: 8080
 ```
+
+### Using sni 
+
+```yaml
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+	name: sni-pass-through-gateway
+spec:
+	selector:
+		istio: ingressgateway
+	servers:
+	- port:
+			number: 31400
+			name: tcp-sni
+			protocol: TLS
+	  tls:
+			mode: PASSTHROUGH
+	  hosts:
+			- "simple-sni=1.istioinaction.io"
+
+```
+
 
